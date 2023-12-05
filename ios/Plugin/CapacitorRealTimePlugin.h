@@ -1,3 +1,4 @@
+// CapacitorRealTimePlugin.h
 #import <UIKit/UIKit.h>
 
 //! Project version number for Plugin.

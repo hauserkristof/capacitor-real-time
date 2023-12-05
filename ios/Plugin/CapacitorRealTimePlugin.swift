@@ -1,3 +1,4 @@
+// CapacitorRealTimePlugin.swift
 import Foundation
 import Capacitor
 
@@ -13,6 +14,13 @@ public class CapacitorRealTimePlugin: CAPPlugin {
         let value = call.getString("value") ?? ""
         call.resolve([
             "value": implementation.echo(value)
+        ])
+    }
+
+    @objc func getUptime(_ call: CAPPluginCall) {
+        let uptime = implementation.getUptime()
+        call.resolve([
+            "uptime": uptime
         ])
     }
 }
