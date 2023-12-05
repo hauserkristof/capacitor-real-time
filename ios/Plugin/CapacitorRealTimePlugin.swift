@@ -23,4 +23,14 @@ public class CapacitorRealTimePlugin: CAPPlugin {
             "uptime": uptime
         ])
     }
+
+    @objc func getGnssTime(_ call: CAPPluginCall) {
+        // Not implemented on iOS, provide an appropriate message or response
+        call.reject("GNSS Time is not available on iOS")
+    }
+
+    @objc func getNetworkTime(_ call: CAPPluginCall) {
+        // Not implemented on iOS, provide an appropriate message or response
+        call.reject("Network Time is not available on iOS")
+    }
 }
