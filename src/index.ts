@@ -1,3 +1,4 @@
+// index.ts
 import { registerPlugin } from '@capacitor/core';
 
 import type { CapacitorRealTimePlugin } from './definitions';
