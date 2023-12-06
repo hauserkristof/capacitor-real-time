@@ -32,7 +32,7 @@ public class CapacitorRealTime {
         } catch (Exception e) {
             Log.e("CapacitorRealTime", "Error getting GNSS Time: " + e.getMessage());
             //call.reject("Error getting GNSS Time: " + e.getMessage());
-            return -1; // Or handle the error as appropriate for your application
+            return null; // Or handle the error as appropriate for your application
         }
     }
 
@@ -51,7 +51,7 @@ public class CapacitorRealTime {
         } catch (Exception e) {
             Log.e("CapacitorRealTime", "Error getting Network Time: " + e.getMessage());
             //call.reject("Error getting Network Time: " + e.getMessage());
-            return -1; // Or handle the error as appropriate for your application
+            return null; // Or handle the error as appropriate for your application
         }
     }
 }

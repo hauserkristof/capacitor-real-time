@@ -1,6 +1,10 @@
 //CapacitorRealTimePlugin.java
 package hu.hauserresults.plugins.caprealtime;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
@@ -8,6 +12,9 @@ import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
 import java.net.InetAddress;
 import java.time.Clock;
+import java.time.DateTimeException;
+import java.time.Duration;
+
 import org.apache.commons.net.ntp.NTPUDPClient;
 import org.apache.commons.net.ntp.TimeInfo;
 
@@ -15,7 +22,7 @@ import org.apache.commons.net.ntp.TimeInfo;
 public class CapacitorRealTimePlugin extends Plugin {
 
     private CapacitorRealTime implementation = new CapacitorRealTime();
-
+    
     @PluginMethod
     public void echo(PluginCall call) {
         String value = call.getString("value");
@@ -33,33 +40,47 @@ public class CapacitorRealTimePlugin extends Plugin {
         call.resolve(ret);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void getGnssTime(PluginCall call) {
-        Clock gnssTime = implementation.getGnssTime();
-        JSObject ret = new JSObject();
+        try{
+            Clock gnssTime = implementation.getGnssTime();
+            JSObject ret = new JSObject();
 
-        if(gnssTime === -1) {
-            call.reject("Error getting GNSS Time");
-        }else if(gnssTime === null) {
-            call.reject("GNSS Time is not available");
-        }else{
-            ret.put("gnssTime", gnssTime.millis());
-            call.resolve(ret);
+            if(gnssTime != null){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ret.put("gnssTime", gnssTime.millis());
+                    call.resolve(ret);
+                }else {
+                    call.reject("GNSS Time is not available");
+                }
+            }else{
+                call.reject("Error getting GNSS Time");
+            }
+        }catch (DateTimeException e){
+            call.reject("Error getting GNSS Time: " + e.getMessage());
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void getNetworkTime(PluginCall call) {
-        Clock networkTime = implementation.getNetworkTime();
-        JSObject ret = new JSObject();
+        try{
+            Clock networkTime = implementation.getNetworkTime();
+            JSObject ret = new JSObject();
 
-        if(networkTime === -1) {
-            call.reject("Error getting Network Time");
-        }else if(networkTime === null) {
-            call.reject("Network Time is not available");
-        }else{
-            ret.put("networkTime", networkTime.millis());
-            call.resolve(ret);
+            if( networkTime != null){
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    ret.put("networkTime", networkTime.millis());
+                    call.resolve(ret);
+                }else{
+                    call.reject("Network Time is not available");
+                }
+            }else{
+                call.reject("Error getting Network Time");
+            }
+        }catch (DateTimeException e){
+            call.reject("Error getting Network Time: " + e.getMessage());
         }
     }
 
