@@ -6,6 +6,10 @@ import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
 import com.getcapacitor.PluginMethod;
 import com.getcapacitor.annotation.CapacitorPlugin;
+import java.time.Clock;
+import java.net.InetAddress;
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
 
 @CapacitorPlugin(name = "CapacitorRealTime")
 public class CapacitorRealTimePlugin extends Plugin {
@@ -51,5 +55,28 @@ public class CapacitorRealTimePlugin extends Plugin {
         } else {
             call.reject("Network Time is not available");
         }
+    }
+
+    @PluginMethod
+    public void getTrueTime(PluginCall call) {
+        new Thread(
+            () -> {
+                try {
+                    NTPUDPClient client = new NTPUDPClient();
+                    client.setDefaultTimeout(10000);
+                    client.open();
+                    InetAddress hostAddr = InetAddress.getByName("pool.ntp.org");
+                    TimeInfo info = client.getTime(hostAddr);
+                    long returnTime = info.getMessage().getTransmitTimeStamp().getTime();
+
+                    JSObject ret = new JSObject();
+                    ret.put("networkTime", returnTime);
+                    call.resolve(ret);
+                } catch (Exception e) {
+                    call.reject("Error getting network time", e);
+                }
+            }
+        )
+            .start();
     }
 }

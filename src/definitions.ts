@@ -4,4 +4,5 @@ export interface CapacitorRealTimePlugin {
   getUptime(): Promise<{ uptime: number }>;
   getGnssTime(): Promise<{ gnssTime: number | null }>;
   getNetworkTime(): Promise<{ networkTime: number | null }>;
+  getTrueTime(): Promise<{ trueTime: number | null }>;
 }
