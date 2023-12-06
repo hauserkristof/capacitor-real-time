@@ -37,7 +37,8 @@ public class CapacitorRealTimePlugin: CAPPlugin {
     @objc func getTrueTime(_ call: CAPPluginCall) {
         Clock.sync(completion: { time, error in
             if let time = time {
-                call.resolve(["trueTime": time.timeIntervalSince1970])
+                // time is a TimeInterval object, convert to milliseconds from seconds since epoch
+                call.resolve(["trueTime": time.timeIntervalSince1970 * 1000])
             } else if let error = error {
                 call.reject("Error getting network time")
             } else {
