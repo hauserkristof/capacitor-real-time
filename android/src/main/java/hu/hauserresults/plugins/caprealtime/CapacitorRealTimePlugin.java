@@ -94,7 +94,7 @@ public class CapacitorRealTimePlugin extends Plugin {
                     long returnTime = info.getMessage().getTransmitTimeStamp().getTime();
 
                     JSObject ret = new JSObject();
-                    ret.put("networkTime", returnTime);
+                    ret.put("trueTime", returnTime);
                     call.resolve(ret);
                 } catch (Exception e) {
                     call.reject("Error getting network time", e);
