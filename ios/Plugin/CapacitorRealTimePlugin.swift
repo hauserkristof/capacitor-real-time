@@ -35,7 +35,7 @@ public class CapacitorRealTimePlugin: CAPPlugin {
     }
 
     @objc func getTrueTime(_ call: CAPPluginCall) {
-        Clock.sync { time, error in
+        Clock.sync(completion: { time, error in
             if let time = time {
                 call.resolve(["trueTime": time.timeIntervalSince1970])
             } else if let error = error {
@@ -43,6 +43,6 @@ public class CapacitorRealTimePlugin: CAPPlugin {
             } else {
                 call.reject("Unknown error occurred")
             }
-        }
+        })
     }
 }

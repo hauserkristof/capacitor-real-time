@@ -37,11 +37,14 @@ public class CapacitorRealTimePlugin extends Plugin {
     public void getGnssTime(PluginCall call) {
         Clock gnssTime = implementation.getGnssTime();
         JSObject ret = new JSObject();
-        if (gnssTime != null) {
+
+        if(gnssTime === -1) {
+            call.reject("Error getting GNSS Time");
+        }else if(gnssTime === null) {
+            call.reject("GNSS Time is not available");
+        }else{
             ret.put("gnssTime", gnssTime.millis());
             call.resolve(ret);
-        } else {
-            call.reject("GNSS Time is not available");
         }
     }
 
@@ -49,11 +52,14 @@ public class CapacitorRealTimePlugin extends Plugin {
     public void getNetworkTime(PluginCall call) {
         Clock networkTime = implementation.getNetworkTime();
         JSObject ret = new JSObject();
-        if (networkTime != null) {
+
+        if(networkTime === -1) {
+            call.reject("Error getting Network Time");
+        }else if(networkTime === null) {
+            call.reject("Network Time is not available");
+        }else{
             ret.put("networkTime", networkTime.millis());
             call.resolve(ret);
-        } else {
-            call.reject("Network Time is not available");
         }
     }
 
