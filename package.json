@@ -17,10 +17,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hauserresults/capacitor-real-time.git.git"
+    "url": "git+https://github.com/hauserresults/capacitor-real-time.git"
   },
   "bugs": {
-    "url": "https://github.com/hauserresults/capacitor-real-time.git/issues"
+    "url": "https://github.com/hauserresults/capacitor-real-time/issues"
   },
   "keywords": [
     "capacitor",
