@@ -28,4 +28,10 @@ export class CapacitorRealTimeWeb
     console.log('getNetworkTime not available in web');
     return { networkTime: null };
   }
+
+  async getTrueTime(): Promise<{ trueTime: number | null }> {
+    // Mock implementation or log statement
+    console.log('getTrueTime not available in web');
+    return { trueTime: null };
+  }
 }

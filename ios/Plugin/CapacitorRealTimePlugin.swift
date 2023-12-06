@@ -1,7 +1,7 @@
 // CapacitorRealTimePlugin.swift
 import Foundation
 import Capacitor
-
+import Kronos
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
@@ -32,5 +32,17 @@ public class CapacitorRealTimePlugin: CAPPlugin {
     @objc func getNetworkTime(_ call: CAPPluginCall) {
         // Not implemented on iOS, provide an appropriate message or response
         call.reject("Network Time is not available on iOS")
+    }
+
+    @objc func getTrueTime(_ call: CAPPluginCall) {
+        Clock.sync { time, error in
+            if let time = time {
+                call.resolve(["networkTime": time.timeIntervalSince1970])
+            } else if let error = error {
+                call.reject("Error getting network time")
+            } else {
+                call.reject("Unknown error occurred")
+            }
+        }
     }
 }
