@@ -8,6 +8,6 @@ import Foundation
     }
 
     @objc public func getUptime() -> TimeInterval {
-        return ProcessInfo.processInfo.systemUptime
+        return ProcessInfo.processInfo.systemUptime * 1000
     }
 }
