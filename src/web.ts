@@ -40,11 +40,10 @@ export class CapacitorRealTimeWeb
     const res = await fetch('https://time.hauserresults.hu/time');
     if (res.ok) {
       const json = (await res.json()) as NtpResponse;
-      console.log('json', json);
       const trueTime = new Date(json.time).getTime();
       return { trueTime: trueTime };
     }
-    console.log('Error fetching NTP time');
+    console.error('Error fetching NTP time');
     return { trueTime: null };
   }
 }
