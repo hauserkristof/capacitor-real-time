@@ -13,11 +13,14 @@ npx cap sync
 
 <docgen-index>
 
-* [`echo(...)`](#echo)
-* [`getUptime()`](#getuptime)
-* [`getGnssTime()`](#getgnsstime)
-* [`getNetworkTime()`](#getnetworktime)
-* [`getTrueTime()`](#gettruetime)
+- [capacitor-real-time](#capacitor-real-time)
+  - [Install](#install)
+  - [API](#api)
+    - [echo(...)](#echo)
+    - [getUptime()](#getuptime)
+    - [getGnssTime()](#getgnsstime)
+    - [getNetworkTime()](#getnetworktime)
+    - [getTrueTime()](#gettruetime)
 
 </docgen-index>
 
@@ -36,8 +39,7 @@ echo(options: { value: string; }) => Promise<{ value: string; }>
 
 **Returns:** <code>Promise&lt;{ value: string; }&gt;</code>
 
---------------------
-
+---
 
 ### getUptime()
 
@@ -47,8 +49,7 @@ getUptime() => Promise<{ uptime: number; }>
 
 **Returns:** <code>Promise&lt;{ uptime: number; }&gt;</code>
 
---------------------
-
+---
 
 ### getGnssTime()
 
@@ -58,8 +59,7 @@ getGnssTime() => Promise<{ gnssTime: number | null; }>
 
 **Returns:** <code>Promise&lt;{ gnssTime: number | null; }&gt;</code>
 
---------------------
-
+---
 
 ### getNetworkTime()
 
@@ -69,8 +69,7 @@ getNetworkTime() => Promise<{ networkTime: number | null; }>
 
 **Returns:** <code>Promise&lt;{ networkTime: number | null; }&gt;</code>
 
---------------------
-
+---
 
 ### getTrueTime()
 
@@ -80,6 +79,6 @@ getTrueTime() => Promise<{ trueTime: number | null; }>
 
 **Returns:** <code>Promise&lt;{ trueTime: number | null; }&gt;</code>
 
---------------------
+---
 
 </docgen-api>
