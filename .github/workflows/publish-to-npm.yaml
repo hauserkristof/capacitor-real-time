@@ -21,6 +21,6 @@ jobs:
 
       # Setup .npmrc file to publish to npm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm publish --provenance --access public
+      - run: pnpm publish --provenance --access public --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
