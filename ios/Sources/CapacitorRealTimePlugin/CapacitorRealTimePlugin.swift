@@ -1,13 +1,18 @@
-// CapacitorRealTimePlugin.swift
 import Foundation
 import Capacitor
 import Kronos
+
 /**
  * Please read the Capacitor iOS Plugin Development Guide
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(CapacitorRealTimePlugin)
-public class CapacitorRealTimePlugin: CAPPlugin {
+public class CapacitorRealTimePlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "CapacitorRealTimePlugin"
+    public let jsName = "CapacitorRealTime"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
+    ]
     private let implementation = CapacitorRealTime()
 
     @objc func echo(_ call: CAPPluginCall) {
@@ -42,15 +47,17 @@ public class CapacitorRealTimePlugin: CAPPlugin {
     }
 
     @objc func getTrueTime(_ call: CAPPluginCall) {
-        Clock.sync(completion: { time, error in
+        Clock.sync {
+            time, error in
             if let time = time {
-                // time is a TimeInterval object, convert to milliseconds from seconds since epoch
+                // time is a Date object when using Kronos
                 call.resolve(["trueTime": time.timeIntervalSince1970 * 1000])
             } else if let error = error {
-                call.reject("Error getting network time")
+                // error is a TimeInterval (Double) representing the offset in seconds
+                call.reject("Error getting network time. Offset: \(error) seconds")
             } else {
-                call.reject("Unknown error occurred")
+                call.reject("Unknown error occurred while getting network time")
             }
-        })
+        }
     }
 }

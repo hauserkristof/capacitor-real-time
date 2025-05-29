@@ -1,4 +1,3 @@
-// CapacitorRealTime.swift
 import Foundation
 
 @objc public class CapacitorRealTime: NSObject {
@@ -7,7 +6,7 @@ import Foundation
         return value
     }
 
-    @objc publix func getUsedTimeZone(_ call: CAPPluginCall) {
+    @objc public func getUsedTimeZone() -> String {
         return TimeZone.current.identifier
     }
 

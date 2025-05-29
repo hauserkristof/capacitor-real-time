@@ -1,4 +1,3 @@
-// web.ts
 import { WebPlugin } from '@capacitor/core';
 
 import type { CapacitorRealTimePlugin } from './definitions';
@@ -8,10 +7,7 @@ interface NtpResponse {
   type: string;
   roundTripTime: number;
 }
-export class CapacitorRealTimeWeb
-  extends WebPlugin
-  implements CapacitorRealTimePlugin
-{
+export class CapacitorRealTimeWeb extends WebPlugin implements CapacitorRealTimePlugin {
   async echo(options: { value: string }): Promise<{ value: string }> {
     console.log('ECHO', options);
     return options;

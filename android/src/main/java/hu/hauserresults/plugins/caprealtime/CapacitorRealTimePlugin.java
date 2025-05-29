@@ -1,4 +1,3 @@
-//CapacitorRealTimePlugin.java
 package hu.hauserresults.plugins.caprealtime;
 
 import android.os.Build;
@@ -91,24 +90,21 @@ public class CapacitorRealTimePlugin extends Plugin {
 
     @PluginMethod
     public void getTrueTime(PluginCall call) {
-        new Thread(
-            () -> {
-                try {
-                    NTPUDPClient client = new NTPUDPClient();
-                    client.setDefaultTimeout(10000);
-                    client.open();
-                    InetAddress hostAddr = InetAddress.getByName("pool.ntp.org");
-                    TimeInfo info = client.getTime(hostAddr);
-                    long returnTime = info.getMessage().getTransmitTimeStamp().getTime();
+        new Thread(() -> {
+            try {
+                NTPUDPClient client = new NTPUDPClient();
+                client.setDefaultTimeout(10000);
+                client.open();
+                InetAddress hostAddr = InetAddress.getByName("pool.ntp.org");
+                TimeInfo info = client.getTime(hostAddr);
+                long returnTime = info.getMessage().getTransmitTimeStamp().getTime();
 
-                    JSObject ret = new JSObject();
-                    ret.put("trueTime", returnTime);
-                    call.resolve(ret);
-                } catch (Exception e) {
-                    call.reject("Error getting network time", e);
-                }
+                JSObject ret = new JSObject();
+                ret.put("trueTime", returnTime);
+                call.resolve(ret);
+            } catch (Exception e) {
+                call.reject("Error getting network time", e);
             }
-        )
-            .start();
+        }).start();
     }
 }
