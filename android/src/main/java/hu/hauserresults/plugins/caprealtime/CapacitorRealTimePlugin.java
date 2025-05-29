@@ -37,6 +37,14 @@ public class CapacitorRealTimePlugin extends Plugin {
         call.resolve(ret);
     }
 
+    @PluginMethod
+    public void getUsedTimeZone(PluginCall call) {
+        String usedTimeZone = implementation.getUsedTimeZone();
+        JSObject ret = new JSObject();
+        ret.put("timeZone", usedTimeZone);
+        call.resolve(ret);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @PluginMethod
     public void getGnssTime(PluginCall call) {

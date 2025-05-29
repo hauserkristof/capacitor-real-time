@@ -24,6 +24,13 @@ public class CapacitorRealTimePlugin: CAPPlugin {
         ])
     }
 
+    @objc func getUsedTimeZone(_ call: CAPPluginCall) {
+        let timeZone = implementation.getUsedTimeZone()
+        call.resolve([
+            "timeZone": timeZone
+        ])
+    }
+
     @objc func getGnssTime(_ call: CAPPluginCall) {
         // Not implemented on iOS, provide an appropriate message or response
         call.unimplemented("GNSS Time is not available on iOS")

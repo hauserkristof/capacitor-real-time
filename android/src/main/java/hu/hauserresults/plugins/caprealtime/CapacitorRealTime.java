@@ -4,6 +4,7 @@ package hu.hauserresults.plugins.caprealtime;
 import android.os.SystemClock;
 import android.util.Log;
 import java.time.Clock;
+import java.util.TimeZone;
 
 public class CapacitorRealTime {
 
@@ -15,6 +16,18 @@ public class CapacitorRealTime {
     public long getUptime() {
         long uptime = SystemClock.elapsedRealtime();
         return uptime;
+    }
+
+    public String getUsedTimeZone() {
+        try {
+            // String usedTimeZone = System.getProperty("persist.sys.timezone");
+            // return usedTimeZone;
+            TimeZone tz = TimeZone.getDefault().getID();
+            return tz;
+        } catch (Exception e) {
+            Log.e("CapacitorRealTime", "Error getting TimeZone: " + e.getMessage());
+            return null;
+        }
     }
 
     public Clock getGnssTime() {
