@@ -1,20 +1,22 @@
-// web.ts
 import { WebPlugin } from '@capacitor/core';
 
 import type { CapacitorRealTimePlugin } from './definitions';
 
-export class CapacitorRealTimeWeb
-  extends WebPlugin
-  implements CapacitorRealTimePlugin
-{
+interface NtpResponse {
+  time: string;
+  type: string;
+  roundTripTime: number;
+}
+export class CapacitorRealTimeWeb extends WebPlugin implements CapacitorRealTimePlugin {
   async echo(options: { value: string }): Promise<{ value: string }> {
     console.log('ECHO', options);
     return options;
   }
   async getUptime(): Promise<{ uptime: number }> {
     // Mock implementation or log statement
-    console.log('getUptime not available in web');
-    return { uptime: 0 };
+    const now: Date = new Date();
+    const unixTimestamp: number = now.getTime();
+    return { uptime: unixTimestamp };
   }
 
   async getGnssTime(): Promise<{ gnssTime: number | null }> {
@@ -31,7 +33,13 @@ export class CapacitorRealTimeWeb
 
   async getTrueTime(): Promise<{ trueTime: number | null }> {
     // Mock implementation or log statement
-    console.log('getTrueTime not available in web');
+    const res = await fetch('https://time.hauserresults.hu/time');
+    if (res.ok) {
+      const json = (await res.json()) as NtpResponse;
+      const trueTime = new Date(json.time).getTime();
+      return { trueTime: trueTime };
+    }
+    console.error('Error fetching NTP time');
     return { trueTime: null };
   }
 }

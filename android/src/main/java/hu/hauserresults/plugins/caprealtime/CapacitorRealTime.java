@@ -1,9 +1,9 @@
-// CapacitorRealTime.java
 package hu.hauserresults.plugins.caprealtime;
 
 import android.os.SystemClock;
 import android.util.Log;
 import java.time.Clock;
+import java.util.TimeZone;
 
 public class CapacitorRealTime {
 
@@ -17,6 +17,17 @@ public class CapacitorRealTime {
         return uptime;
     }
 
+    public String getUsedTimeZone() {
+        try {
+            // String usedTimeZone = System.getProperty("persist.sys.timezone");
+            // return usedTimeZone;
+            return TimeZone.getDefault().getID();
+        } catch (Exception e) {
+            Log.e("CapacitorRealTime", "Error getting TimeZone: " + e.getMessage());
+            return null;
+        }
+    }
+
     public Clock getGnssTime() {
         try {
             Clock gnssTime = null;
@@ -24,7 +35,7 @@ public class CapacitorRealTime {
                 gnssTime = SystemClock.currentGnssTimeClock();
             }
             if (gnssTime == null) {
-                //throw new UnsupportedOperationException("GNSS Time is not available");
+                // throw new UnsupportedOperationException("GNSS Time is not available");
                 Log.e("CapacitorRealTime", "GNSS Time is not available");
                 //call.reject("GNSS Time is not available");
             }
