@@ -21,7 +21,7 @@ jobs:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
       # Setup .npmrc file to publish to npm
-      - run: pnpm ci
+      - run: pnpm install --frozen-lockfile
       - run: pnpm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

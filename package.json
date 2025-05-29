@@ -75,5 +75,12 @@
     "android": {
       "src": "android"
     }
+  },
+  "packageManager": "pnpm@10.11.0",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org",
+    "tag": "latest"
   }
 }
