@@ -11,12 +11,7 @@ public class CapacitorRealTimePlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "CapacitorRealTimePlugin"
     public let jsName = "CapacitorRealTime"
     public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getUptime", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getUsedTimeZone", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getGnssTime", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getNetworkTime", returnType: CAPPluginReturnPromise),
-        CAPPluginMethod(name: "getTrueTime", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
     ]
     private let implementation = CapacitorRealTime()
 
@@ -52,13 +47,16 @@ public class CapacitorRealTimePlugin: CAPPlugin, CAPBridgedPlugin {
     }
 
     @objc func getTrueTime(_ call: CAPPluginCall) {
-        implementation.getTrueTime { timeInterval, error in
-            if let error = error {
-                call.reject("Error getting true time: \(error.localizedDescription)")
-            } else if let timeInterval = timeInterval {
-                call.resolve(["trueTime": timeInterval])
+        Clock.sync {
+            time, error in
+            if let time = time {
+                // time is a Date object when using Kronos
+                call.resolve(["trueTime": time.timeIntervalSince1970 * 1000])
+            } else if let error = error {
+                // error is a TimeInterval (Double) representing the offset in seconds
+                call.reject("Error getting network time. Offset: \(error) seconds")
             } else {
-                call.reject("Unknown error occurred while getting true time")
+                call.reject("Unknown error occurred while getting network time")
             }
         }
     }
