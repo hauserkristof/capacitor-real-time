@@ -1,6 +1,6 @@
 {
   "name": "capacitor-real-time",
-  "version": "7.0.5",
+  "version": "7.0.6",
   "description": "This Capacitor plugin provides real time for mobiles which cannot be modified by the user.",
   "main": "dist/plugin.cjs.js",
   "module": "dist/esm/index.js",
