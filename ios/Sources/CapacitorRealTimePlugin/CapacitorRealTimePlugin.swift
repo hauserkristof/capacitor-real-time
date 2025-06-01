@@ -11,7 +11,11 @@ public class CapacitorRealTimePlugin: CAPPlugin, CAPBridgedPlugin {
     public let identifier = "CapacitorRealTimePlugin"
     public let jsName = "CapacitorRealTime"
     public let pluginMethods: [CAPPluginMethod] = [
-        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise)
+        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getUptime", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getGnssTime", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getNetworkTime", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getTrueTime", returnType: CAPPluginReturnPromise)
     ]
     private let implementation = CapacitorRealTime()
 
