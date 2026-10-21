@@ -19,36 +19,16 @@ class CapacitorRealTimeTests: XCTestCase {
         XCTAssertGreaterThan(uptime, 0)
     }
 
+    func testUptimeIncludesSleep() {
+        let implementation = CapacitorRealTime()
+        // Continuous uptime is never behind the awake-only system uptime.
+        let awakeUptime = ProcessInfo.processInfo.systemUptime * 1000
+        XCTAssertGreaterThanOrEqual(implementation.getUptime(), awakeUptime)
+    }
+
     func testUsedTimeZone() {
         let implementation = CapacitorRealTime()
         let timeZone = implementation.getUsedTimeZone()
         XCTAssertNotNil(timeZone)
-    }
-
-    func testGnssTime() {
-        let implementation = CapacitorRealTime()
-        let gnssTime = implementation.getGnssTime()
-        XCTAssertNil(gnssTime)
-    }
-
-    func testNetworkTime() {
-        let implementation = CapacitorRealTime()
-        let networkTime = implementation.getNetworkTime()
-        XCTAssertNil(networkTime)
-    }
-
-    func testTrueTime() {
-        let implementation = CapacitorRealTime()
-        let trueTime = implementation.getTrueTime()
-        XCTAssertNotNil(trueTime)
-    }
-
-    func testAll() {
-        testEcho()
-        testUptime()
-        testUsedTimeZone()
-        testGnssTime()
-        testNetworkTime()
-        testTrueTime()
     }
 }

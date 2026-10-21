@@ -11,7 +11,10 @@ import Kronos
         return TimeZone.current.identifier
     }
 
+    /// Milliseconds since boot, including time spent asleep (like Android's
+    /// SystemClock.elapsedRealtime). ProcessInfo.systemUptime pauses while the
+    /// device sleeps, which breaks uptime-based drift calculations.
     @objc public func getUptime() -> TimeInterval {
-        return ProcessInfo.processInfo.systemUptime * 1000
+        return TimeInterval(clock_gettime_nsec_np(CLOCK_MONOTONIC)) / 1_000_000
     }
 }
