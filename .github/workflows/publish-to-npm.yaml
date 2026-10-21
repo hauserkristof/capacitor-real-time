@@ -20,7 +20,7 @@ jobs:
       - name: Enable corepack
         run: corepack enable
       # Trusted publishing (OIDC) needs npm >= 11.5.1; no NPM_TOKEN secret required
-      - run: npm install -g npm@latest
+      - run: npm install -g npm@11
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: npm publish --access public
